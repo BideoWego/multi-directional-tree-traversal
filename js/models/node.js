@@ -11,7 +11,8 @@ APP.Node = (function($) {
 
 
   var _originalReceiver;
-  var _color;
+  var _backgroundColor;
+  var _borderColor;
 
 
   var _randomColor = function() {
@@ -65,9 +66,13 @@ APP.Node = (function($) {
   Node.prototype.propagate = function(sender) {
     if (sender === undefined) {
       _originalReceiver = this;
-      _color = _randomColor();
+      _backgroundColor = _randomColor();
+      _borderColor = _randomColor();
     }
-    this.$element.css('background', _color);
+    this.$element.css({
+      "background": _backgroundColor,
+      "border-color": _borderColor
+    });
     _delayedReaction(this, sender);
   };
 

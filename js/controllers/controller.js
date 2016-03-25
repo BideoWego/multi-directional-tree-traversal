@@ -17,7 +17,7 @@ APP.Controller = (function(Tree, View) {
   return {
     init: function() {
       _tree = new APP.Tree();
-      View.init(_receiveClick);
+      View.init(_tree, _receiveClick);
     }
   };
 
