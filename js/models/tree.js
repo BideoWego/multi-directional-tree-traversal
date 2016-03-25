@@ -12,9 +12,13 @@ APP.Tree = (function($, Node) {
   var _buildChildren = function(tree, stack, node) {
     if (node.depth < tree.depth) {
       for (var i = 0; i < 2; i++) {
-        var child = new Node({ parent: node });
+        var child = new Node({
+          parent: node,
+          tree: tree
+        });
         node.children.push(child);
         stack.push(child);
+        tree.numNodes++;
       }
     }
   };
@@ -33,7 +37,8 @@ APP.Tree = (function($, Node) {
   var Tree = function(options) {
     options = options || {};
     this.depth = (options.depth === undefined || options.depth > 6) ? 6 : options.depth;
-    this.root = new Node();
+    this.root = new Node({ tree: this });
+    this.numNodes = 1;
     this.$element = $('<div>')
       .addClass('tree');
     this.$container = options.$container || $('#app');
