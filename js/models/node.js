@@ -11,6 +11,15 @@ APP.Node = (function($) {
 
 
   var _originalReceiver;
+  var _color;
+
+
+  var _randomColor = function() {
+    return 'rgb(' +
+      Math.floor(Math.random() * 256) + ',' +
+      Math.floor(Math.random() * 256) + ',' +
+      Math.floor(Math.random() * 256) + ')';
+  };
 
 
   var _delayedReaction = function(origin, sender) {
@@ -32,7 +41,6 @@ APP.Node = (function($) {
           receiver.propagate(origin);
         }
       }
-
     }, 200);
   };
 
@@ -55,12 +63,11 @@ APP.Node = (function($) {
 
 
   Node.prototype.propagate = function(sender) {
-
     if (sender === undefined) {
       _originalReceiver = this;
+      _color = _randomColor();
     }
-
-    this.$element.toggleClass('active');
+    this.$element.css('background', _color);
     _delayedReaction(this, sender);
   };
 
