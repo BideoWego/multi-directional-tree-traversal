@@ -1,0 +1,30 @@
+/* Style */
+
+.depth {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 64px;
+}
+
+.node {
+  float: left;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #333;
+  margin: 0 auto;
+}
+
+.node.active {
+  background: #2EA629;
+}
+
+
+
+
+
+
+
+
+
+
