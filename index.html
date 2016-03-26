@@ -35,8 +35,14 @@
 
           <header class="page-header text-center">
             <h1>Multi Directional Tree Traversal</h1>
-            <p>Click any node to watch the event travel throughout the tree.</p>
-            <a class="btn btn-danger" href="" ng-if="tree.active" ng-click="tree.deactivate()">Deactivate</a>
+            <p>Click any circle (node) to watch the event travel throughout the tree.</p>
+            <p>Control the travel speed with the slider.</p>
+            <p>Stop the loop with the <code>Stop Loop</code> button.</p>
+            <div class="form-group">
+              <label for="speed">Speed: {{ tree.delay }}</label>
+              <input id="speed" type="range" class="form-control" value="200" min="25" max="1000" ng-model="tree.delay">
+            </div>
+            <a class="btn btn-danger" href="" ng-if="tree.active" ng-click="tree.deactivate()">Stop Loop</a>
           </header>
 
           <div class="tree">

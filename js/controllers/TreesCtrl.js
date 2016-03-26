@@ -7,7 +7,8 @@ TreeTraversal.controller('TreesCtrl',
   ['$scope', 'TreeService', 'NodeService', 'ColorService',
   function($scope, TreeService, NodeService, ColorService) {
 
-    $scope.tree = TreeService.create({ delay: 100 });
+    $scope.delay = 200;
+    $scope.tree = TreeService.create({ delay: $scope.delay });
     
     $scope.tree.each(function(node) {
       node.onPropagate = function(node) {
