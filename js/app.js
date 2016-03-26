@@ -3,14 +3,13 @@
 // ----------------------------------------
 
 
-var APP = APP || {};
+var TreeTraversal = angular.module('TreeTraversal', []);
 
 
-$(document).ready(function() {
-
-  APP.Controller.init();
-
-});
+TreeTraversal.factory('_',
+  ['$window', function($window) {
+    return $window._;
+  }]);
 
 
 

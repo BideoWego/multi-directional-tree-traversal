@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="TreeTraversal" ng-controller="TreesCtrl">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,15 @@
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+
+    <!-- Underscore -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+
+    <!-- Sugar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sugar/1.4.1/sugar-full.development.js"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -27,9 +36,14 @@
           <header class="page-header text-center">
             <h1>Multi Directional Tree Traversal</h1>
             <p>Click any node to watch the event travel throughout the tree.</p>
+            <a class="btn btn-danger" href="" ng-if="tree.active" ng-click="tree.deactivate()">Deactivate</a>
           </header>
 
-          <div id="app"></div>
+          <div class="tree">
+            <div class="depth" ng-repeat="depth in tree.nodes" ng-attr-data-depth="{{ $index }}">
+              <a href="" class="node" ng-repeat="node in depth" ng-attr-data-id="{{ node.id }}" ng-click="onNodeClick(node.id)"></a href="">
+            </div>
+          </div>
 
         </div>
       </div>
@@ -38,15 +52,14 @@
     <!-- App -->
     <script src="/js/app.js"></script>
 
-    <!-- Models -->
-    <script src="/js/models/node.js"></script>
-    <script src="/js/models/tree.js"></script>
-
-    <!-- Views -->
-    <script src="/js/views/view.js"></script>
+    <!-- Services -->
+    <script src="/js/services/ColorService.js"></script>
+    <script src="/js/services/NodeService.js"></script>
+    <script src="/js/services/TreeService.js"></script>
 
     <!-- Controllers -->
-    <script src="/js/controllers/controller.js"></script>
+    <script src="/js/controllers/TreesCtrl.js"></script>
+
   </body>
 </html>
 
