@@ -72,7 +72,6 @@ TreeTraversal.factory('TreeService',
       return function(id) {
         tree.active = true;
         var receiver = tree.find(id);
-        receiver.active = true;
         receiver.propagate();
       };
     };
@@ -81,6 +80,10 @@ TreeTraversal.factory('TreeService',
     var _deactivate = function(tree) {
       return function() {
         tree.active = false;
+        tree.each(function(node) {
+          node.onPropagate(node);
+        });
+        NodeService.clearTimeouts();
       };
     };
 
@@ -94,11 +97,11 @@ TreeTraversal.factory('TreeService',
       var tree = {
         delay: options.delay,
         depth: (options.depth === undefined || options.depth > 6) ? 6 : options.depth,
-        root: NodeService.create({ tree: this }),
         nodes: [[]],
         active: false
       };
 
+      tree.root = NodeService.create({ tree: tree });
       tree.find = _find(tree);
       tree.processClick = _processClick(tree);
       tree.each = _each(tree);

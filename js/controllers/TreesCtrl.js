@@ -7,7 +7,9 @@ TreeTraversal.controller('TreesCtrl',
   ['$scope', 'TreeService', 'NodeService', 'ColorService',
   function($scope, TreeService, NodeService, ColorService) {
 
-    $scope.delay = 200;
+    $scope.min = 25;
+    $scope.max = 1000;
+    $scope.delay = 500;
     $scope.tree = TreeService.create({ delay: $scope.delay });
     
     $scope.tree.each(function(node) {
@@ -21,6 +23,7 @@ TreeTraversal.controller('TreesCtrl',
     });
 
     $scope.onNodeClick = function(id) {
+      $scope.tree.deactivate();
       ColorService.randomize();
       $scope.tree.processClick(id);
     };

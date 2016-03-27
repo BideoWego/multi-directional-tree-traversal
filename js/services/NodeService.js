@@ -14,6 +14,16 @@ TreeTraversal.factory('NodeService',
     var _timeouts = [];
 
 
+    var _clearTimeouts = function() {
+      while (_timeouts.length) {
+        var i = _timeouts.length - 1;
+        var to = _timeouts[i];
+        $timeout.cancel(to);
+        _timeouts.splice(i, 1);
+      }
+    };
+
+
     var _findReceivers = function(node, sender) {
       var receivers = [];
       if (sender !== node.parent) {
@@ -24,11 +34,12 @@ TreeTraversal.factory('NodeService',
       if (!!~index) {
         children.splice(index, 1);
       }
-      return receivers.concat(children);
+      receivers = receivers.concat(children)
+      return receivers;
     };
 
 
-    var _sendMessages = function(node, sender, receivers) {
+    var _sendMessages = function(node, receivers) {
       var receiver;
       while (receivers.length) {
         receiver = receivers.pop();
@@ -42,7 +53,7 @@ TreeTraversal.factory('NodeService',
     var _propagateMessages = function(node, sender) {
       var receivers = _findReceivers(node, sender);
       var to = $timeout(function() {
-        _sendMessages(node, sender, receivers);
+        _sendMessages(node, receivers);
         _resolveContinuousPropagation(node, sender);
       }, node.tree.delay);
       _timeouts.push(to);
@@ -52,8 +63,11 @@ TreeTraversal.factory('NodeService',
     var _resolveContinuousPropagation = function(node, sender) {
       if (_numNodesPropagated === node.tree.numNodes &&
           node.tree.active) {
-        _onSubsequentPropagation();
-        _originalReceiver.propagate();
+        var to = $timeout(function() {
+          _onSubsequentPropagation();
+          _originalReceiver.propagate();
+        }, node.tree.delay);
+        _timeouts.push(to);
       }
     };
 
@@ -62,12 +76,7 @@ TreeTraversal.factory('NodeService',
       if (sender === undefined) {
         _numNodesPropagated = 0;
         _originalReceiver = node;
-        while (_timeouts.length) {
-          var i = _timeouts.length - 1;
-          var to = _timeouts[i];
-          $timeout.cancel(to);
-          _timeouts.splice(i, 1);
-        }
+        _clearTimeouts();
       }
     };
 
@@ -97,7 +106,6 @@ TreeTraversal.factory('NodeService',
         id: _id++,
         parent: options.parent,
         tree: options.tree,
-        delay: options.delay,
         depth: (options.parent) ? options.parent.depth + 1 : 0,
         children: [],
         onPropagate: function() {}
@@ -107,6 +115,9 @@ TreeTraversal.factory('NodeService',
 
       return node;
     };
+
+
+    NodeService.clearTimeouts = _clearTimeouts;
 
 
     return NodeService;

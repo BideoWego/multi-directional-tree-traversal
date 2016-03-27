@@ -35,19 +35,25 @@
 
           <header class="page-header text-center">
             <h1>Multi Directional Tree Traversal</h1>
-            <p>Click any circle (node) to watch the event travel throughout the tree.</p>
+            <p>You can start the default <strong>top to bottom</strong> traversal with the <code>Start</code> button.</p>
+            <p>Click any circle (node) to watch the event travel throughout the tree starting from <em>that</em> node.</p>
             <p>Control the travel speed with the slider.</p>
-            <p>Stop the loop with the <code>Stop Loop</code> button.</p>
+            <p>Once traversal begins you can stop the loop with the <code>Stop</code> button.</p>
             <div class="form-group">
-              <label for="speed">Speed: {{ tree.delay }}</label>
-              <input id="speed" type="range" class="form-control" value="200" min="25" max="1000" ng-model="tree.delay">
+              <div class="clearfix">
+                <span class="pull-left">{{ min }}</span>
+                <label for="speed">Speed: {{ tree.delay }}</label>
+                <span class="pull-right">{{ max }}</span>
+              </div>
+              <input id="speed" type="range" class="form-control" min="25" max="1000" ng-model="tree.delay">
             </div>
-            <a class="btn btn-danger" href="" ng-if="tree.active" ng-click="tree.deactivate()">Stop Loop</a>
+            <a class="btn btn-danger" href="" ng-if="tree.active" ng-click="tree.deactivate()">Stop</a>
+            <a class="btn btn-success" href="" ng-if="!tree.active" ng-click="onNodeClick(tree.root.id)">Start</a>
           </header>
 
           <div class="tree">
             <div class="depth" ng-repeat="depth in tree.nodes" ng-attr-data-depth="{{ $index }}">
-              <a href="" class="node" ng-repeat="node in depth" ng-attr-data-id="{{ node.id }}" ng-click="onNodeClick(node.id)"></a href="">
+              <a href="" class="node" ng-repeat="node in depth" ng-attr-data-id="{{ node.id }}" ng-click="onNodeClick(node.id)"></a>
             </div>
           </div>
 
