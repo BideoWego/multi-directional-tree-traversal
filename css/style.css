@@ -17,7 +17,28 @@
 }
 
 
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .node {
+    width: 12px;
+    height: 12px;
+  }
 
+  .depth {
+    margin-bottom: 48px;
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+  .node {
+    width: 6px;
+    height: 6px;
+  }
+
+  .depth {
+    margin-bottom: 36px;
+  }
+}
 
 
 
